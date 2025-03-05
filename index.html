@@ -3,27 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chúc mừng 8/3!</title>
+    <title>Happy Women's Day</title>
+    <link rel="icon" href="heart.png" type="image/png">
     <link rel="stylesheet" href="style.css">
 </head>
-<body> 
-    <div id="startScreen" class="screen">
-        <div class="heart"></div>
-        <p id="startText">Cùng khám phá Emmm nhé</p>
+<body>
+    <div id="start-screen">
+        <img src="heart.gif" alt="Trái tim động">
+        <p id="start-text">Cùng khám phá Emmm nhé</p>
     </div>
-    <div id="messageScreen" class="screen hidden">
-        <div class="message-container">
-            <div id="messageText" class="message-text"></div>
-            <div class="tree-container">
-                <canvas id="treeCanvas" width="300" height="400"></canvas>
-            </div>
+
+    <div id="main-content" style="display: none;">
+        <div id="left-column">
+            <p id="typing-text"></p>
+            <button id="next-button" style="display: none;">Tiếp theo</button>
         </div>
-        <button id="nextButton" class="hidden">Tiếp theo</button>
+        <div id="right-column">
+            <div id="tree"></div>
+        </div>
     </div>
-    <div id="endScreen" class="screen hidden">
-        <h1>Chúc mừng ngày 8/3!</h1>
+
+    <footer>
         <p>Made by  L.Nguyeen</p>
-    </div>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
