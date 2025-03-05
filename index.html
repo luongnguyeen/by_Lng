@@ -3,21 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chúc mừng ngày 8/3</title>
+    <title>Chúc mừng 8/3!</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="start-screen">
-        <img src="heart.png" alt="Trái tim">
-        <p id="start-text">Nhấn vào đây để bắt đầu nhé!</p>
+    <div id="startScreen" class="screen">
+        <div class="heart"></div>
+        <p id="startText">Cùng khám phá Emmm nhé</p>
     </div>
-    <div id="main-content" style="display: none;">
-        <div id="message-column">
-            <p id="message"></p>
+    <div id="messageScreen" class="screen hidden">
+        <div class="message-container">
+            <div id="messageText" class="message-text"></div>
+            <div class="tree-container">
+                <canvas id="treeCanvas" width="300" height="400"></canvas>
+            </div>
         </div>
-        <div id="tree-container">
-            <img src="tree.png" alt="Cây xanh">
-        </div>
+        <button id="nextButton" class="hidden">Tiếp theo</button>
+    </div>
+    <div id="endScreen" class="screen hidden">
+        <h1>Chúc mừng ngày 8/3!</h1>
+        <p>Made by  L.Nguyeen</p>
     </div>
     <script src="script.js"></script>
 </body>
