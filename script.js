@@ -1,47 +1,53 @@
 const startScreen = document.getElementById('start-screen');
-const mainContent = document.getElementById('main-content');
-const startText = document.getElementById('start-text');
+const mainScreen = document.getElementById('main-screen');
+const startMessage = document.getElementById('start-message');
 const typingText = document.getElementById('typing-text');
 const nextButton = document.getElementById('next-button');
-const treeCanvas = document.getElementById('treeCanvas');
+const treeContainer = document.getElementById('tree-container');
+const treeCanvas = document.getElementById('tree-canvas');
 const ctx = treeCanvas.getContext('2d');
+
+startMessage.addEventListener('click', () => {
+    startScreen.classList.remove('active');
+    mainScreen.classList.add('active');
+    startTyping();
+});
 
 const messages = [
     "Chúc em ngày 8/3 thật nhiều niềm vui và hạnh phúc!",
-    "Em là người con gái tuyệt vời nhất mà anh từng gặp.",
-    "Anh mong rằng chúng ta sẽ có thật nhiều kỷ niệm đẹp bên nhau.",
-    "Anh yêu em!"
+    "Em là người con gái tuyệt vời nhất anh từng gặp.",
+    "Anh mong rằng mỗi ngày của em đều tràn ngập tiếng cười.",
+    "Cảm ơn em đã đến và làm cho cuộc sống của anh thêm tươi đẹp."
 ];
 
 let messageIndex = 0;
 let charIndex = 0;
-let hearts = [];
 
-startText.addEventListener('click', () => {
-    startScreen.classList.add('hidden');
-    messageScreen.classList.remove('hidden');
-    typeMessage();
-    drawTree();
-});
-
-function typeMessage() {
+function startTyping() {
     if (messageIndex < messages.length) {
         if (charIndex < messages[messageIndex].length) {
-            messageText.innerHTML += messages[messageIndex].charAt(charIndex);
+            typingText.textContent += messages[messageIndex].charAt(charIndex);
             charIndex++;
-            setTimeout(typeMessage, 50);
+            setTimeout(startTyping, 50); // Tốc độ gõ chữ (điều chỉnh theo ý muốn)
         } else {
             messageIndex++;
             charIndex = 0;
-            messageText.innerHTML += '<br><br>';
-            setTimeout(typeMessage, 500);
+            typingText.innerHTML += "<br><br>"; // Thêm dòng trống giữa các câu
+            setTimeout(startTyping, 1000); // Thời gian chờ trước khi gõ câu tiếp theo
         }
     } else {
-        nextButton.classList.remove('hidden');
+        nextButton.style.display = 'block';
+        drawTree();
     }
 }
 
+nextButton.addEventListener('click', () => {
+    // Chuyển sang giao diện tiếp theo (bạn có thể thêm mã ở đây)
+    alert("Chức năng đang được phát triển");
+});
+
 function drawTree() {
+    treeContainer.style.display = 'block';
     // Vẽ thân cây
     ctx.beginPath();
     ctx.moveTo(150, 400);
@@ -102,5 +108,3 @@ function animateHearts() {
 
     requestAnimationFrame(animateHearts);
 }
-
-nextButton.addEventListener('click', ()
