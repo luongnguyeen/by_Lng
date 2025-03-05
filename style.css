@@ -1,66 +1,98 @@
 body {
     background-color: pink;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    font-family: sans-serif;
+    min-height: 100vh;
 }
 
-#start-screen {
+.screen {
     text-align: center;
-    cursor: pointer;
 }
 
-#start-screen img {
-    width: 100px;
-}
-
-#main-content {
-    display: flex;
-    width: 100%;
-    height: 100%;
-}
-
-#message-column {
-    width: 50%;
-    padding: 20px;
-    font-size: 1.5em;
-    line-height: 1.6;
-}
-
-#tree-container {
-    width: 50%;
-    position: relative;
-    overflow: hidden;
-}
-
-#tree-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+.hidden {
+    display: none;
 }
 
 .heart {
-    position: absolute;
-    width: 30px;
-    animation: fall 5s linear infinite;
+    width: 100px;
+    height: 90px;
+    background-color: red;
+    position: relative;
+    transform: rotate(-45deg);
+    animation: heartBeat 1s infinite alternate;
 }
 
-@keyframes fall {
+.heart::before,
+.heart::after {
+    content: "";
+    width: 100px;
+    height: 90px;
+    background-color: red;
+    position: absolute;
+    border-radius: 50%;
+}
+
+.heart::before {
+    top: -50px;
+    left: 0;
+}
+
+.heart::after {
+    left: 50px;
+    top: 0;
+}
+
+@keyframes heartBeat {
     0% {
-        transform: translateY(-50px);
-        opacity: 0;
+        transform: rotate(-45deg) scale(1);
     }
-    10% {
-        opacity: 1;
-    }
-    90% {
-        opacity: 1;
+    50% {
+        transform: rotate(-45deg) scale(1.1);
     }
     100% {
-        transform: translateY(100vh);
-        opacity: 0;
+        transform: rotate(-45deg) scale(1);
     }
+}
+
+#startText {
+    font-size: 24px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.message-container {
+    display: flex;
+    width: 80%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.message-text {
+    flex: 1;
+    padding: 20px;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.tree-container {
+    flex: 1;
+    padding: 20px;
+    position: relative;
+}
+
+#treeCanvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#nextButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
 }
