@@ -1,48 +1,53 @@
 const startScreen = document.getElementById('start-screen');
-const mainScreen = document.getElementById('main-screen');
-const message = document.getElementById('message');
-const leaves = document.querySelector('.leaves');
+const mainContent = document.getElementById('main-content');
+const messageElement = document.getElementById('message');
+const treeContainer = document.getElementById('tree-container');
 
 const messages = [
     "Chúc mừng ngày 8/3!",
     "Chúc em luôn xinh đẹp và hạnh phúc.",
-    "Anh rất vui vì được quen biết em.",
-    "Mong rằng chúng ta sẽ có nhiều kỷ niệm đẹp cùng nhau.",
-    "Anh có một điều muốn nói...",
-    "Anh thích em!"
+    "Anh rất vui vì có em trong cuộc đời.",
+    "Em là người đặc biệt nhất đối với anh.",
+    "Mong rằng em sẽ thích món quà nhỏ này."
 ];
 
+let messageIndex = 0;
+let charIndex = 0;
+
 startScreen.addEventListener('click', () => {
-    startScreen.classList.add('hidden');
-    mainScreen.classList.remove('hidden');
-    displayMessages(0);
-    createLeaves();
+    startScreen.style.display = 'none';
+    mainContent.style.display = 'flex';
+    treeContainer.style.display = 'block'; // Hiển thị cây xanh
+
+    typeMessage();
+    createFallingHearts();
 });
 
-function displayMessages(index) {
-    if (index < messages.length) {
-        let i = 0;
-        const interval = setInterval(() => {
-            message.textContent += messages[index][i];
-            i++;
-            if (i === messages[index].length) {
-                clearInterval(interval);
-                setTimeout(() => {
-                    message.innerHTML += "<br>";
-                    displayMessages(index + 1);
-                }, 1000);
-            }
-        }, 50);
+function typeMessage() {
+    if (messageIndex < messages.length) {
+        if (charIndex < messages[messageIndex].length) {
+            messageElement.textContent += messages[messageIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(typeMessage, 50); // Tốc độ gõ chữ
+        } else {
+            messageIndex++;
+            charIndex = 0;
+            messageElement.textContent += '<br>'; // Xuống dòng
+            setTimeout(typeMessage, 1000); // Thời gian chờ trước khi gõ câu tiếp theo
+        }
     }
 }
 
-function createLeaves() {
-    for (let i = 0; i < 50; i++) {
-        const leaf = document.createElement('div');
-        leaf.classList.add('leaf');
-        leaf.style.left = `${Math.random() * 100}%`;
-        leaf.style.animationDuration = `${Math.random() * 5 + 5}s`;
-        leaf.style.animationDelay = `${Math.random() * 5}s`;
-        leaves.appendChild(leaf);
-    }
+function createFallingHearts() {
+    setInterval(() => {
+        const heart = document.createElement('img');
+        heart.src = 'heart.png';
+        heart.classList.add('heart');
+        heart.style.left = Math.random() * 100 + '%';
+        treeContainer.appendChild(heart);
+
+        heart.addEventListener('animationiteration', () => {
+            heart.remove();
+        });
+    }, 500); // Tần suất tạo trái tim
 }
