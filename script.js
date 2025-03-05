@@ -6,7 +6,7 @@ const messageText = document.getElementById('messageText');
 const nextButton = document.getElementById('nextButton');
 const treeCanvas = document.getElementById('treeCanvas');
 const ctx = treeCanvas.getContext('2d');
-
+ 
 const messages = [
     "Chúc em ngày 8/3 thật nhiều niềm vui và hạnh phúc!",
     "Em là người con gái tuyệt vời nhất mà anh từng gặp.",
