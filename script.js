@@ -1,53 +1,107 @@
-const startScreen = document.getElementById('start-screen');
-const mainContent = document.getElementById('main-content');
-const messageElement = document.getElementById('message');
-const treeContainer = document.getElementById('tree-container');
+const startScreen = document.getElementById('startScreen');
+const messageScreen = document.getElementById('messageScreen');
+const endScreen = document.getElementById('endScreen');
+const startText = document.getElementById('startText');
+const messageText = document.getElementById('messageText');
+const nextButton = document.getElementById('nextButton');
+const treeCanvas = document.getElementById('treeCanvas');
+const ctx = treeCanvas.getContext('2d');
 
 const messages = [
-    "Chúc mừng ngày 8/3!",
-    "Chúc em luôn xinh đẹp và hạnh phúc.",
-    "Anh rất vui vì có em trong cuộc đời.",
-    "Em là người đặc biệt nhất đối với anh.",
-    "Mong rằng em sẽ thích món quà nhỏ này."
+    "Chúc em ngày 8/3 thật nhiều niềm vui và hạnh phúc!",
+    "Em là người con gái tuyệt vời nhất mà anh từng gặp.",
+    "Anh mong rằng chúng ta sẽ có thật nhiều kỷ niệm đẹp bên nhau.",
+    "Anh yêu em!"
 ];
 
 let messageIndex = 0;
 let charIndex = 0;
+let hearts = [];
 
-startScreen.addEventListener('click', () => {
-    startScreen.style.display = 'none';
-    mainContent.style.display = 'flex';
-    treeContainer.style.display = 'block'; // Hiển thị cây xanh
-
+startText.addEventListener('click', () => {
+    startScreen.classList.add('hidden');
+    messageScreen.classList.remove('hidden');
     typeMessage();
-    createFallingHearts();
+    drawTree();
 });
 
 function typeMessage() {
     if (messageIndex < messages.length) {
         if (charIndex < messages[messageIndex].length) {
-            messageElement.textContent += messages[messageIndex].charAt(charIndex);
+            messageText.innerHTML += messages[messageIndex].charAt(charIndex);
             charIndex++;
-            setTimeout(typeMessage, 50); // Tốc độ gõ chữ
+            setTimeout(typeMessage, 50);
         } else {
             messageIndex++;
             charIndex = 0;
-            messageElement.textContent += '<br>'; // Xuống dòng
-            setTimeout(typeMessage, 1000); // Thời gian chờ trước khi gõ câu tiếp theo
+            messageText.innerHTML += '<br><br>';
+            setTimeout(typeMessage, 500);
         }
+    } else {
+        nextButton.classList.remove('hidden');
     }
 }
 
-function createFallingHearts() {
-    setInterval(() => {
-        const heart = document.createElement('img');
-        heart.src = 'heart.png';
-        heart.classList.add('heart');
-        heart.style.left = Math.random() * 100 + '%';
-        treeContainer.appendChild(heart);
+function drawTree() {
+    // Vẽ thân cây
+    ctx.beginPath();
+    ctx.moveTo(150, 400);
+    ctx.lineTo(150, 100);
+    ctx.strokeStyle = 'brown';
+    ctx.lineWidth = 10;
+    ctx.stroke();
 
-        heart.addEventListener('animationiteration', () => {
-            heart.remove();
-        });
-    }, 500); // Tần suất tạo trái tim
+    // Vẽ cành cây
+    ctx.beginPath();
+    ctx.moveTo(150, 150);
+    ctx.lineTo(250, 100);
+    ctx.strokeStyle = 'brown';
+    ctx.lineWidth = 8;
+    ctx.stroke();
+
+    // Vẽ lá (hình trái tim)
+    for (let i = 0; i < 10; i++) {
+        const x = Math.random() * 200 + 50;
+        const y = Math.random() * 100 + 50;
+        const size = Math.random() * 20 + 10;
+        const color = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+        hearts.push({ x, y, size, color, speed: Math.random() * 2 + 1 });
+    }
+
+    animateHearts();
 }
+
+function drawHeart(x, y, size, color) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(Math.PI / 4);
+    ctx.beginPath();
+    ctx.moveTo(0, size);
+    ctx.bezierCurveTo(size / 2, size / 4, size, -size / 3, 0, -size);
+    ctx.bezierCurveTo(-size, -size / 3, -size / 2, size / 4, 0, size);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.restore();
+}
+
+function animateHearts() {
+    ctx.clearRect(0, 0, treeCanvas.width, treeCanvas.height);
+    drawTree(); // Vẽ lại cây để không bị mất cành
+
+    hearts.forEach((heart, index) => {
+        drawHeart(heart.x, heart.y, heart.size, heart.color);
+        heart.y += heart.speed;
+        if (heart.y > treeCanvas.height) {
+            hearts.splice(index, 1);
+            const x = Math.random() * 200 + 50;
+            const y = Math.random() * 100 + 50;
+            const size = Math.random() * 20 + 10;
+            const color = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+            hearts.push({ x, y, size, color, speed: Math.random() * 2 + 1 });
+        }
+    });
+
+    requestAnimationFrame(animateHearts);
+}
+
+nextButton.addEventListener('click', ()
